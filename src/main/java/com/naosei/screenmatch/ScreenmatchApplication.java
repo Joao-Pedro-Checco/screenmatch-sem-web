@@ -1,8 +1,6 @@
 package com.naosei.screenmatch;
 
-import com.naosei.screenmatch.model.DadosSerie;
-import com.naosei.screenmatch.service.ConsumoApi;
-import com.naosei.screenmatch.service.ConverteDados;
+import com.naosei.screenmatch.main.Main;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,10 +14,7 @@ public class ScreenmatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		ConsumoApi api = new ConsumoApi();
-		var json = api.obterDados("https://www.omdbapi.com/?t=the+boys&apikey=9c1586bd");
-		ConverteDados conversor = new ConverteDados();
-		DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
-		System.out.println(dados);
+		Main main = new Main();
+		main.exibeMenu();
 	}
 }
