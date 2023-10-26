@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.naosei.screenmatch.model.DadosSerie;
 import com.naosei.screenmatch.model.DadosTemporada;
 import com.naosei.screenmatch.model.Serie;
+import com.naosei.screenmatch.repository.SerieRepository;
 import com.naosei.screenmatch.service.ConsumoApi;
 import com.naosei.screenmatch.service.ConverteDados;
+import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,6 +22,11 @@ public class Main {
     private final String API_KEY = "9c1586bd";
     private final String ENDERECO = "https://www.omdbapi.com/?t=";
     private final List<DadosSerie> dadosSeries = new ArrayList<>();
+    private SerieRepository repository;
+
+    public Main(SerieRepository repository) {
+        this.repository = repository;
+    }
 
     public void exibeMenu() throws JsonProcessingException {
         int opcao = -1;
@@ -48,9 +55,8 @@ public class Main {
     }
 
     private void buscarSerieWeb() throws JsonProcessingException {
-        DadosSerie dadosSerie = getDadosSerie();
-        dadosSeries.add(dadosSerie);
-        System.out.println(dadosSerie);
+        Serie serie = new Serie(getDadosSerie());
+        repository.save(serie);
     }
 
     private DadosSerie getDadosSerie() throws JsonProcessingException {
