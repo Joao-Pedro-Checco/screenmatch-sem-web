@@ -3,10 +3,12 @@ package com.naosei.screenmatch.main;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.naosei.screenmatch.model.DadosSerie;
 import com.naosei.screenmatch.model.DadosTemporada;
+import com.naosei.screenmatch.model.Serie;
 import com.naosei.screenmatch.service.ConsumoApi;
 import com.naosei.screenmatch.service.ConverteDados;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -73,6 +75,9 @@ public class Main {
     }
 
     private void listarSeriesBuscadas() {
-        dadosSeries.forEach(System.out::println);
+        List<Serie> series = dadosSeries.stream().map(Serie::new).toList();
+        series.stream()
+                .sorted(Comparator.comparing(Serie::getGenero))
+                .forEach(System.out::println);
     }
 }
