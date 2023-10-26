@@ -5,7 +5,7 @@ import java.util.OptionalDouble;
 public class Serie {
     private String titulo;
     private Integer totalTemporadas;
-    private Double avalicacao;
+    private Double avaliacao;
     private Categoria genero;
     private String atores;
     private String poster;
@@ -14,7 +14,7 @@ public class Serie {
     public Serie(DadosSerie dadosSerie) {
         this.titulo = dadosSerie.titulo();
         this.totalTemporadas = dadosSerie.totalTemporadas();
-        this.avalicacao = OptionalDouble.of(Double.parseDouble(dadosSerie.avaliacao())).orElse(0);
+        this.avaliacao = OptionalDouble.of(Double.parseDouble(dadosSerie.avaliacao())).orElse(0);
         this.genero = Categoria.fromString(dadosSerie.genero().split(",")[0].trim());
         this.atores = dadosSerie.atores();
         this.poster = dadosSerie.poster();
@@ -37,12 +37,12 @@ public class Serie {
         this.totalTemporadas = totalTemporadas;
     }
 
-    public Double getAvalicacao() {
-        return this.avalicacao;
+    public Double getAvaliacao() {
+        return this.avaliacao;
     }
 
-    public void setAvalicacao(Double avalicacao) {
-        this.avalicacao = avalicacao;
+    public void setAvaliacao(Double avaliacao) {
+        this.avaliacao = avaliacao;
     }
 
     public Categoria getGenero() {
@@ -82,7 +82,7 @@ public class Serie {
         return "genero=" + genero +
                 ", titulo='" + titulo + '\'' +
                 ", totalTemporadas=" + totalTemporadas +
-                ", avalicacao=" + avalicacao +
+                ", avalicacao=" + avaliacao +
                 ", atores='" + atores + '\'' +
                 ", poster='" + poster + '\'' +
                 ", sinopse='" + sinopse + '\'';
