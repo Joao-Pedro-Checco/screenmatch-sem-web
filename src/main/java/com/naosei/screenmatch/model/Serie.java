@@ -1,7 +1,16 @@
 package com.naosei.screenmatch.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.OptionalDouble;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 public class Serie {
     private String titulo;
     private Integer totalTemporadas;
@@ -19,72 +28,5 @@ public class Serie {
         this.atores = dadosSerie.atores();
         this.poster = dadosSerie.poster();
         this.sinopse = dadosSerie.sinopse();
-    }
-
-    public String getTitulo() {
-        return this.titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public Integer getTotalTemporadas() {
-        return this.totalTemporadas;
-    }
-
-    public void setTotalTemporadas(Integer totalTemporadas) {
-        this.totalTemporadas = totalTemporadas;
-    }
-
-    public Double getAvaliacao() {
-        return this.avaliacao;
-    }
-
-    public void setAvaliacao(Double avaliacao) {
-        this.avaliacao = avaliacao;
-    }
-
-    public Categoria getGenero() {
-        return this.genero;
-    }
-
-    public void setGenero(Categoria genero) {
-        this.genero = genero;
-    }
-
-    public String getAtores() {
-        return this.atores;
-    }
-
-    public void setAtores(String atores) {
-        this.atores = atores;
-    }
-
-    public String getPoster() {
-        return this.poster;
-    }
-
-    public void setPoster(String poster) {
-        this.poster = poster;
-    }
-
-    public String getSinopse() {
-        return this.sinopse;
-    }
-
-    public void setSinopse(String sinopse) {
-        this.sinopse = sinopse;
-    }
-
-    @Override
-    public String toString() {
-        return "genero=" + genero +
-                ", titulo='" + titulo + '\'' +
-                ", totalTemporadas=" + totalTemporadas +
-                ", avalicacao=" + avaliacao +
-                ", atores='" + atores + '\'' +
-                ", poster='" + poster + '\'' +
-                ", sinopse='" + sinopse + '\'';
     }
 }
