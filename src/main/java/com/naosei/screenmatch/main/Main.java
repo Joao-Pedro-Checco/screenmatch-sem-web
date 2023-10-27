@@ -55,6 +55,8 @@ public class Main {
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Operação inválida!");
             }
+
+            System.out.println("----------------------------------------");
         }
     }
 
@@ -151,18 +153,20 @@ public class Main {
     }
 
     private void buscarPorNumeroTemporadasEAvaliacao() {
-        System.out.print("Digite o número de temporadas: ");
+        System.out.print("Digite o número máximo de temporadas: ");
         Integer temporadas = scanner.nextInt();
         System.out.print("Digite a avaliação mínima: ");
         Double avaliacao = scanner.nextDouble();
         List<Serie> seriesEncontradas =
-                repository.findByTotalTemporadasAndAvaliacaoGreaterThanEqual(temporadas, avaliacao);
+                repository.seriesPorTemporadaEAvaliacao(temporadas, avaliacao);
 
         if (seriesEncontradas.isEmpty()) {
             System.out.println("Não encontrei séries com " + temporadas + " temporadas e com nota mínima " + avaliacao);
         } else {
             System.out.println("Séries encontradas:");
-            seriesEncontradas.forEach(s -> System.out.println(s.getTitulo() + " | Avaliação: " + s.getAvaliacao()));
+            seriesEncontradas.forEach(s -> System.out.println(s.getTitulo() +
+                    " | Temporadas: " + s.getTotalTemporadas() +
+                    " | Avaliação: " + s.getAvaliacao()));
         }
     }
 }

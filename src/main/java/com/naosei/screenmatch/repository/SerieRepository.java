@@ -3,6 +3,7 @@ package com.naosei.screenmatch.repository;
 import com.naosei.screenmatch.model.Categoria;
 import com.naosei.screenmatch.model.Serie;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,5 +19,6 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
 
     List<Serie> findByGenero(Categoria categoria);
 
-    List<Serie> findByTotalTemporadasAndAvaliacaoGreaterThanEqual(Integer temporadas, Double avaliacao);
+    @Query("select s from Serie s where s.totalTemporadas <= :temporadas and s.avaliacao >= :avaliacao")
+    List<Serie> seriesPorTemporadaEAvaliacao(Integer temporadas, Double avaliacao);
 }
