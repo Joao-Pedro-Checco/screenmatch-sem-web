@@ -34,8 +34,9 @@ public class Main {
                 6- Top 5 séries
                 7- Buscar Séries por gênero
                 8- Buscar Séries por número de temporadas e avaliação mínima
-                9- Buscar Eposódio por nome
+                9- Buscar Episódio por nome
                 10- Top 5 episódios
+                11- Buscar Episódios a partir de um ano
                 0- Sair
                 """;
 
@@ -55,6 +56,7 @@ public class Main {
                 case 8 -> buscarPorNumeroTemporadasEAvaliacao();
                 case 9 -> buscarEpisodioPorNome();
                 case 10 -> buscarTop5EpisodiosPorSerie();
+                case 11 -> buscarEpisodiosAPartirDoAno();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Operação inválida!");
             }
@@ -204,6 +206,26 @@ public class Main {
             List<Episodio> topEpisodios = repository.topEpisodiosPorSerie(serie);
             System.out.println("Top 5 episódios de " + serie.getTitulo());
             topEpisodios.forEach(e -> System.out.println("Série: " + e.getSerie().getTitulo() +
+                    " | Episódio: " + e.getTitulo() +
+                    " | Temporada: " + e.getTemporada() +
+                    " | Número: " + e.getNumero() +
+                    " | Avaliação: " + e.getAvaliacao()));
+        }
+    }
+
+    private void buscarEpisodiosAPartirDoAno() {
+        String nomeSerie = getNomeSerie();
+        List<Serie> serieLista = repository.findAllByTituloContainingIgnoreCase(nomeSerie);
+        if (serieLista.isEmpty()) {
+            System.out.println("Série não encontrada!");
+        } else {
+            Serie serie = serieLista.get(0);
+            System.out.print("Digite o ano limite de lançamento: ");
+            int ano = scanner.nextInt();
+            scanner.nextLine();
+            List<Episodio> episodiosAno = repository.episodiosPorAno(serie, ano);
+            System.out.println("Episódios a partir de " + ano);
+            episodiosAno.forEach(e -> System.out.println("Série: " + e.getSerie().getTitulo() +
                     " | Episódio: " + e.getTitulo() +
                     " | Temporada: " + e.getTemporada() +
                     " | Número: " + e.getNumero() +
