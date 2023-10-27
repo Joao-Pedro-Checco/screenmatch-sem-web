@@ -55,7 +55,7 @@ public class Main {
     }
 
     private DadosSerie getDadosSerie() throws JsonProcessingException {
-        System.out.print("Digite o nome da séria para busca: ");
+        System.out.print("Digite o nome da série para busca: ");
         String nomeSerie = scanner.nextLine().replace(" ", "+");
         String json = consumoApi.obterDados(ENDERECO + nomeSerie + "&apikey=" + API_KEY);
         return converteDados.obterDados(json, DadosSerie.class);

@@ -13,7 +13,7 @@ import java.util.OptionalDouble;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@ToString
+@ToString(exclude = {"serie"})
 public class Episodio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
