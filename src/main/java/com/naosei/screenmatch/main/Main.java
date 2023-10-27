@@ -33,6 +33,7 @@ public class Main {
                 5- Buscar Séries por ator
                 6- Top 5 séries
                 7- Buscar Séries por gênero
+                8- Buscar Séries por número de temporadas e avaliação mínima
                 
                 0- Sair
                 """;
@@ -50,6 +51,7 @@ public class Main {
                 case 5 -> buscarSeriesPorAtor();
                 case 6 -> buscarTop5Series();
                 case 7 -> buscarSeriesPorGenero();
+                case 8 -> buscarPorNumeroTemporadasEAvaliacao();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Operação inválida!");
             }
@@ -144,6 +146,22 @@ public class Main {
             System.out.println("Não encontrei séries com gênero: " + genero);
         } else {
             System.out.println("Séries de '" + genero + "' encontradas:");
+            seriesEncontradas.forEach(s -> System.out.println(s.getTitulo() + " | Avaliação: " + s.getAvaliacao()));
+        }
+    }
+
+    private void buscarPorNumeroTemporadasEAvaliacao() {
+        System.out.print("Digite o número de temporadas: ");
+        Integer temporadas = scanner.nextInt();
+        System.out.print("Digite a avaliação mínima: ");
+        Double avaliacao = scanner.nextDouble();
+        List<Serie> seriesEncontradas =
+                repository.findByTotalTemporadasAndAvaliacaoGreaterThanEqual(temporadas, avaliacao);
+
+        if (seriesEncontradas.isEmpty()) {
+            System.out.println("Não encontrei séries com " + temporadas + " temporadas e com nota mínima " + avaliacao);
+        } else {
+            System.out.println("Séries encontradas:");
             seriesEncontradas.forEach(s -> System.out.println(s.getTitulo() + " | Avaliação: " + s.getAvaliacao()));
         }
     }
