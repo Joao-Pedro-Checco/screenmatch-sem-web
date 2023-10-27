@@ -1,5 +1,6 @@
 package com.naosei.screenmatch.repository;
 
+import com.naosei.screenmatch.model.Categoria;
 import com.naosei.screenmatch.model.Serie;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,4 +15,6 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
     List<Serie> findAllByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(String ator, Double avaliacao);
 
     List<Serie> findTop5ByOrderByAvaliacaoDesc();
+
+    List<Serie> findByGenero(Categoria categoria);
 }

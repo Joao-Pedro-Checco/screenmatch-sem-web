@@ -1,10 +1,7 @@
 package com.naosei.screenmatch.main;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.naosei.screenmatch.model.DadosSerie;
-import com.naosei.screenmatch.model.DadosTemporada;
-import com.naosei.screenmatch.model.Episodio;
-import com.naosei.screenmatch.model.Serie;
+import com.naosei.screenmatch.model.*;
 import com.naosei.screenmatch.repository.SerieRepository;
 import com.naosei.screenmatch.service.ConsumoApi;
 import com.naosei.screenmatch.service.ConverteDados;
@@ -35,6 +32,7 @@ public class Main {
                 4- Buscar Séries por título
                 5- Buscar Séries por ator
                 6- Top 5 séries
+                7- Buscar Séries por gênero
                 
                 0- Sair
                 """;
@@ -51,6 +49,7 @@ public class Main {
                 case 4 -> buscarSeriesPorTitulo();
                 case 5 -> buscarSeriesPorAtor();
                 case 6 -> buscarTop5Series();
+                case 7 -> buscarSeriesPorGenero();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Operação inválida!");
             }
@@ -133,5 +132,19 @@ public class Main {
     private void buscarTop5Series() {
         List<Serie> series = repository.findTop5ByOrderByAvaliacaoDesc();
         series.forEach(s -> System.out.println(s.getTitulo() + " | Avaliação: " + s.getAvaliacao()));
+    }
+
+    private void buscarSeriesPorGenero() {
+        System.out.print("Digite o gênero: ");
+        String genero = scanner.nextLine();
+        Categoria categoria = Categoria.fromPortugues(genero);
+        List<Serie> seriesEncontradas = repository.findByGenero(categoria);
+
+        if (seriesEncontradas.isEmpty()) {
+            System.out.println("Não encontrei séries com gênero: " + genero);
+        } else {
+            System.out.println("Séries de '" + genero + "' encontradas:");
+            seriesEncontradas.forEach(s -> System.out.println(s.getTitulo() + " | Avaliação: " + s.getAvaliacao()));
+        }
     }
 }
