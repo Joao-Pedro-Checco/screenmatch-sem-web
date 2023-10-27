@@ -30,6 +30,7 @@ public class Main {
                 1- Buscar Séries
                 2- Buscar Episódios
                 3- Listar Séries buscadas
+                4- Buscar série por título
                 
                 0- Sair
                 """;
@@ -43,6 +44,7 @@ public class Main {
                 case 1 -> buscarSerieWeb();
                 case 2 -> buscarEpisodioPorSerie();
                 case 3 -> listarSeriesBuscadas();
+                case 4 -> buscarSeriePorTitulo();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Operação inválida!");
             }
@@ -65,9 +67,7 @@ public class Main {
         listarSeriesBuscadas();
         System.out.print("Escolha uma série pelo nome: ");
         String nomeSerie = scanner.nextLine();
-        Optional<Serie> serie = series.stream()
-                .filter(s -> s.getTitulo().toLowerCase().contains(nomeSerie.toLowerCase()))
-                .findFirst();
+        Optional<Serie> serie = repository.findByTituloIgnoreCase(nomeSerie);
 
         if (serie.isEmpty()) {
             System.out.println("Série não encontrada!");
@@ -97,5 +97,17 @@ public class Main {
         series.stream()
                 .sorted(Comparator.comparing(Serie::getGenero))
                 .forEach(System.out::println);
+    }
+
+    private void buscarSeriePorTitulo() {
+        System.out.print("Digite o título da série: ");
+        String nomeSerie = scanner.nextLine();
+        List<Optional<Serie>> seriesEncontradas = repository.findAllByTituloContainingIgnoreCase(nomeSerie);
+        if (seriesEncontradas.isEmpty()) {
+            System.out.println("Série não encontrada!");
+        } else {
+            System.out.println("Resultados encontrados para '" + nomeSerie + "': ");
+            seriesEncontradas.forEach(System.out::println);
+        }
     }
 }
