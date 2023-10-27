@@ -34,7 +34,7 @@ public class Main {
                 6- Top 5 séries
                 7- Buscar Séries por gênero
                 8- Buscar Séries por número de temporadas e avaliação mínima
-                
+                9- Buscar Eposódio por nome
                 0- Sair
                 """;
 
@@ -52,6 +52,7 @@ public class Main {
                 case 6 -> buscarTop5Series();
                 case 7 -> buscarSeriesPorGenero();
                 case 8 -> buscarPorNumeroTemporadasEAvaliacao();
+                case 9 -> buscarEpisodioPorNome();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Operação inválida!");
             }
@@ -168,5 +169,22 @@ public class Main {
                     " | Temporadas: " + s.getTotalTemporadas() +
                     " | Avaliação: " + s.getAvaliacao()));
         }
+    }
+
+    private void buscarEpisodioPorNome() {
+        System.out.print("Digite o nome do episódio: ");
+        String nomeEpisodio = scanner.nextLine();
+        List<Episodio> episodiosEncontrados = repository.episodiosPorNome(nomeEpisodio);
+
+       if (episodiosEncontrados.isEmpty()) {
+           System.out.println("Não encontrei nenhum episódio contendo '" + nomeEpisodio + "' no nome!");
+       } else {
+           System.out.println("Episódios encontrados:");
+           episodiosEncontrados.forEach(e -> System.out.println("Série: " + e.getSerie().getTitulo() +
+                   " | Episódio: " + e.getTitulo() +
+                   " | Temporada: " + e.getTemporada() +
+                   " | Número: " + e.getNumero() +
+                   " | Avaliação: " + e.getAvaliacao()));
+       }
     }
 }

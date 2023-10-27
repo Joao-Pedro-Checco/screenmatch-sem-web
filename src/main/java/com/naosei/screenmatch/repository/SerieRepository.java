@@ -1,6 +1,7 @@
 package com.naosei.screenmatch.repository;
 
 import com.naosei.screenmatch.model.Categoria;
+import com.naosei.screenmatch.model.Episodio;
 import com.naosei.screenmatch.model.Serie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +22,7 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
 
     @Query("select s from Serie s where s.totalTemporadas <= :temporadas and s.avaliacao >= :avaliacao")
     List<Serie> seriesPorTemporadaEAvaliacao(Integer temporadas, Double avaliacao);
+
+    @Query("select e from Serie s join s.episodios e where e.titulo ilike %:nomeEpisodio%")
+    List<Episodio> episodiosPorNome(String nomeEpisodio);
 }
