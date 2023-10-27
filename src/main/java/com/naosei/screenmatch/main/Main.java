@@ -1,13 +1,15 @@
 package com.naosei.screenmatch.main;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.naosei.screenmatch.model.*;
+import com.naosei.screenmatch.model.DadosSerie;
+import com.naosei.screenmatch.model.DadosTemporada;
+import com.naosei.screenmatch.model.Episodio;
+import com.naosei.screenmatch.model.Serie;
 import com.naosei.screenmatch.repository.SerieRepository;
 import com.naosei.screenmatch.service.ConsumoApi;
 import com.naosei.screenmatch.service.ConverteDados;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Main {
     private final Scanner scanner = new Scanner(System.in);
