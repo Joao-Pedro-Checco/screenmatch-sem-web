@@ -35,6 +35,7 @@ public class Main {
                 7- Buscar Séries por gênero
                 8- Buscar Séries por número de temporadas e avaliação mínima
                 9- Buscar Eposódio por nome
+                10- Top 5 episódios
                 0- Sair
                 """;
 
@@ -53,6 +54,7 @@ public class Main {
                 case 7 -> buscarSeriesPorGenero();
                 case 8 -> buscarPorNumeroTemporadasEAvaliacao();
                 case 9 -> buscarEpisodioPorNome();
+                case 10 -> buscarTop5EpisodiosPorSerie();
                 case 0 -> System.out.println("Saindo...");
                 default -> System.out.println("Operação inválida!");
             }
@@ -64,6 +66,11 @@ public class Main {
     private void buscarSerieWeb() throws JsonProcessingException {
         Serie serie = new Serie(getDadosSerie());
         repository.save(serie);
+    }
+
+    private String getNomeSerie() {
+        System.out.print("Digite o nome da série: ");
+        return scanner.nextLine();
     }
 
     private DadosSerie getDadosSerie() throws JsonProcessingException {
@@ -110,8 +117,7 @@ public class Main {
     }
 
     private void buscarSeriesPorTitulo() {
-        System.out.print("Digite o título da série: ");
-        String nomeSerie = scanner.nextLine();
+        String nomeSerie = getNomeSerie();
         List<Serie> seriesEncontradas = repository.findAllByTituloContainingIgnoreCase(nomeSerie);
         if (seriesEncontradas.isEmpty()) {
             System.out.println("Série não encontrada!");
@@ -186,5 +192,22 @@ public class Main {
                    " | Número: " + e.getNumero() +
                    " | Avaliação: " + e.getAvaliacao()));
        }
+    }
+
+    private void buscarTop5EpisodiosPorSerie() {
+        String nomeSerie = getNomeSerie();
+        List<Serie> serieLista = repository.findAllByTituloContainingIgnoreCase(nomeSerie);
+        if (serieLista.isEmpty()) {
+            System.out.println("Série não encontrada!");
+        } else {
+            Serie serie = serieLista.get(0);
+            List<Episodio> topEpisodios = repository.topEpisodiosPorSerie(serie);
+            System.out.println("Top 5 episódios de " + serie.getTitulo());
+            topEpisodios.forEach(e -> System.out.println("Série: " + e.getSerie().getTitulo() +
+                    " | Episódio: " + e.getTitulo() +
+                    " | Temporada: " + e.getTemporada() +
+                    " | Número: " + e.getNumero() +
+                    " | Avaliação: " + e.getAvaliacao()));
+        }
     }
 }
